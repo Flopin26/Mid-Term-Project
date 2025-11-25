@@ -1,0 +1,40 @@
+body, html {
+  margin: 0; padding: 0; height: 100%;
+  font-family: Arial, sans-serif;
+}
+
+header, #narrative, footer {
+  padding: 1rem 2rem;
+  background-color: #f9f9f9;
+  border-bottom: 1px solid #ccc;
+}
+
+#map {
+  height: 60vh;
+  width: 100%;
+}
+
+h1, h2 {
+  color: #333;
+}
+
+footer {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.legend {
+  background: white;
+  padding: 10px;
+  border-radius: 5px;
+  line-height: 18px;
+  color: #555;
+  box-shadow: 0 0 5px rgba(0,0,0,0.2);
+}
+.legend i {
+  width: 18px;
+  height: 18px;
+  float: left;
+  margin-right: 8px;
+  opacity: 0.8;
+}
