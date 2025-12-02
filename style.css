@@ -86,3 +86,53 @@ h1, h2 {
   color: #333;
   border: 1px solid #ccc;
 }
+
+/* =============================
+   TOP NAVIGATION MENU
+   ============================= */
+.top-menu {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: #1d91c0;
+  padding: 10px 0;
+  z-index: 1000;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.top-menu ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+}
+
+.top-menu li {
+  display: inline;
+}
+
+.top-menu a {
+  color: white;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  transition: background 0.3s;
+}
+
+.top-menu a:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* Push content down so menu doesn't overlap */
+header {
+  margin-top: 70px;
+}
+
+/* Smooth scrolling effect */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 90px; /* adjust based on menu height */
+}
