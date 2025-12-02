@@ -203,21 +203,27 @@ fetch(map5gUrl)
   .then(res => res.json())
   .then(data => {
     layer5G = L.geoJSON(data, {
-  style: style5G,
-  onEachFeature: function(feature, layer) {
-    const v = get5GValue(feature);
+      style: style5G,
+      onEachFeature: function(feature, layer) {
+        const v = get5GValue(feature);
 
-    layer.on({
-      mouseover: highlightFeature,
-      mouseout: resetHighlight
+        // Define a layer-specific reset function
+        function resetHighlight5G(e) {
+            layer5G.resetStyle(e.target);
+        }
+
+        layer.on({
+          mouseover: highlightFeature,
+          // Use the layer-specific reset function
+          mouseout: resetHighlight5G
+        });
+
+        layer.bindPopup(`
+          <strong>${feature.properties.NAME}</strong><br>
+          5G coverage: ${v}%
+        `);
+      }
     });
-
-    layer.bindPopup(`
-      <strong>${feature.properties.NAME}</strong><br>
-      5G coverage: ${v}%
-    `);
-  }
-});
 
 
     // Add 5G layer to layerControl once it's available
@@ -287,25 +293,35 @@ function style3G(feature) {
 
 var layer3G;
 
+// ... [EXISTING 3G MAP LAYER CODE] ...
+
 fetch(map3gUrl)
   .then(res => res.json())
   .then(data => {
     layer3G = L.geoJSON(data, {
-  style: style3G,
-  onEachFeature: function(feature, layer) {
-    const v = get3GValue(feature);
+      style: style3G,
+      onEachFeature: function(feature, layer) {
+        const v = get3GValue(feature);
+        
+        // Define a layer-specific reset function
+        function resetHighlight3G(e) {
+            layer3G.resetStyle(e.target);
+        }
 
-    layer.on({
-      mouseover: highlightFeature,
-      mouseout: resetHighlight
+        layer.on({
+          mouseover: highlightFeature,
+          // Use the layer-specific reset function
+          mouseout: resetHighlight3G
+        });
+
+        layer.bindPopup(`
+          <strong>${feature.properties.NAME}</strong><br>
+          3G coverage: ${v}%
+        `);
+      }
     });
 
-    layer.bindPopup(`
-      <strong>${feature.properties.NAME}</strong><br>
-      3G coverage: ${v}%
-    `);
-  }
-});
+// ... [REST OF 3G CODE] ...
 
 
     // Add 3G layer to the layerControl once ready
