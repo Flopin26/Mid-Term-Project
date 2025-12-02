@@ -86,3 +86,17 @@ h1, h2 {
   color: #333;
   border: 1px solid #ccc;
 }
+
+.content-wrapper {
+  display: flex;
+  align-items: flex-start;   /* Align text and image nicely */
+  gap: 20px;                 /* Space between text and image */
+}
+
+.country-image {
+  width: 200px;              /* Adjust size as needed */
+  height: auto;
+  border-radius: 8px;        /* Optional, makes it nicer */
+}
+
+
