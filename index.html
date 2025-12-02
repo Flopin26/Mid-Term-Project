@@ -17,54 +17,100 @@
   <main id="container">
     <div id="map" role="region" aria-label="Interactive map showing internet access"></div>
 
+    <p class="scale-hint">Scale: Global extent (not to scale)</p>
+
     <section id="narrative" role="region" aria-label="Narrative describing the digital divide">
       
-     <article class="story-section" id="intro">
-  <h2>Introduction</h2>
-  <p>The digital divide refers to unequal access to information and communication technologies worldwide. This map compares internet penetration between two countries with contrasting digital access.</p>
-  <button onclick="zoomGlobal()">View Global</button>
-  <div class="transition-effect">
-    <p>As we zoom in, notice how the colors on the map reveal stark differences in digital infrastructure.</p>
-  </div>
-</article>
+      <!-- INTRO -->
+      <article class="story-section" id="intro">
+        <h2>Introduction</h2>
+        <p>The digital divide refers to unequal access to information and communication technologies worldwide. 
+        This map compares internet penetration and mobile network infrastructure between two countries with 
+        contrasting digital access.</p>
 
-<article class="story-section" id="netherlands">
-  <h2>Netherlands – High Internet Access</h2>
-  <p>The Netherlands boasts near-universal internet coverage, supported by advanced broadband and mobile infrastructure, fostering broad digital inclusion and economic growth.</p>
-  <button onclick="zoomHigh()">Zoom to Netherlands</button>
-  <div class="context-layer">
-    <p>Explore the broadband coverage and population density layers to see how infrastructure supports high connectivity.</p>
-  </div>
-</article>
+        <!-- MAP BUTTONS -->
+        <button onclick="showInternet()">Show Internet Users</button>
+        <button onclick="show5G()">Show 5G Coverage</button>
+        <button onclick="show3G()">Show 3G Coverage</button>
 
-<article class="story-section" id="chad">
-  <h2>Chad – Limited Internet Access</h2>
-  <p>Chad faces significant challenges with limited digital infrastructure, low population connectivity, and geographic barriers that restrict digital inclusion.</p>
-  <button onclick="zoomLow()">Zoom to Chad</button>
-  <div class="context-layer">
-    <p>Toggle the terrain and mobile network layers to understand the barriers to digital access in Chad.</p>
-  </div>
-</article>
+        <p class="map-instructions">Use the buttons to switch between Internet, 3G, and 5G layers. Hover over a country to see specific values.</p>
 
-<article class="story-section" id="conclusion">
-  <h2>Conclusion & Initiatives</h2>
-  <p>Bridging the digital divide requires coordinated efforts in infrastructure investment, policy development, and collaboration to make digital access affordable and equitable for all.</p>
-  <div class="call-to-action">
-    <p>Learn more about global initiatives to bridge the digital divide and explore how you can get involved.</p>
-    <a href="https://example.com/initiatives">Explore Initiatives</a>
-  </div>
-</article>
+        <div class="transition-effect">
+          <p>As we zoom in, notice how the colors on the map reveal stark differences in digital infrastructure.</p>
+        </div>
+      </article>
 
+      <!-- GLOBAL PATTERNS -->
+      <article class="story-section" id="global-patterns">
+        <h2>Global Patterns of Digital Connectivity</h2>
+        <p>When we explore the global map, a clear spatial pattern emerges. High-income regions in Europe, North America, 
+        and East Asia form the "digitally saturated world", with near-universal broadband and mobile coverage.</p>
+
+        <p>In contrast, much of Sub-Saharan Africa and parts of South Asia face structural barriers: limited 3G/4G rollout, 
+        high mobile data costs, and inconsistent electricity access. These conditions create a strong digital 
+        opportunity gap, where geography and infrastructure determine who can meaningfully participate online.</p>
+
+        <p>Switch between the layers above to see how coverage does not automatically translate into usage.</p>
+      </article>
+
+      <!-- NETHERLANDS -->
+      <article class="story-section" id="netherlands">
+        <h2>Netherlands – High Internet Access</h2>
+        <p>The Netherlands boasts near-universal internet coverage, supported by dense 4G and 5G infrastructure and highly 
+        affordable broadband. This reduces the urban–rural divide and enables widespread engagement in digital services, 
+        from e-government to mobile banking.</p>
+        <button onclick="zoomHigh()">Zoom to Netherlands</button>
+        <div class="context-layer">
+          <p>This region exemplifies a digitally inclusive society where infrastructure, affordability, and digital literacy 
+          converge to support near-total adoption.</p>
+        </div>
+      </article>
+
+      <!-- CHAD -->
+      <article class="story-section" id="chad">
+        <h2>Chad – Limited Internet Access</h2>
+        <p>Chad shows a starkly different situation. Despite around 60% of the population living in areas with 3G or 4G 
+        availability, only about 13% actually use the internet. This demonstrates how infrastructure availability alone 
+        does not guarantee digital inclusion.</p>
+        <button onclick="zoomLow()">Zoom to Chad</button>
+        <div class="context-layer">
+          <p>High device costs, expensive mobile data, low digital literacy, and patchy electricity access create barriers 
+          that limit meaningful use—even when mobile coverage technically exists.</p>
+        </div>
+      </article>
+
+      <!-- KEY INSIGHTS -->
+      <article class="story-section" id="insights">
+        <h2>Key Insights</h2>
+        <ul>
+          <li>Coverage expands faster than actual internet use.</li>
+          <li>Digital inequality is strongly linked to socio-economic disparities.</li>
+          <li>A country can have strong mobile networks but low digital adoption.</li>
+          <li>High connectivity correlates with greater digital opportunity.</li>
+          <li>Infrastructure alone cannot close the digital divide—affordability and skills matter.</li>
+        </ul>
+      </article>
+
+      <!-- CONCLUSION -->
+      <article class="story-section" id="conclusion">
+        <h2>Conclusion & Initiatives</h2>
+        <p>Bridging the digital divide requires coordinated efforts across infrastructure investment, affordability, 
+        policy development, and digital literacy. Understanding the spatial patterns behind digital geographies 
+        helps highlight where action is most needed.</p>
+        <div class="call-to-action">
+          <p>Learn more about global initiatives designed to support digital inclusion worldwide.</p>
+          <a href="https://example.com/initiatives">Explore Initiatives</a>
+        </div>
+      </article>
 
     </section>
   </main>
 
   <footer>
-    <p>Data sources: ITU, World Bank, local telecom reports</p>
+    <p>Data sources: ITU (2023), GSMA Mobile Connectivity Index (2023), World Bank</p>
   </footer>
 
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
-
