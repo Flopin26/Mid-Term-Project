@@ -16,17 +16,15 @@ header, footer {
   align-items: center;
 }
 
-/* Smaller, cleaner map */
 #map {
   width: 90%;
-  height: 50vh;   /* reduced height */
+  height: 50vh;  
   margin: 1.5rem 0;
   border-radius: 12px;
   box-shadow: 0 2px 10px rgba(0,0,0,0.15);
   overflow: hidden;
 }
 
-/* Narrative layout */
 #narrative {
   width: 90%;
   max-width: 900px;
@@ -40,20 +38,16 @@ h1, h2 {
   color: #333;
 }
 
-
-/* Make sure paragraph inside flex container has no weird margins */
 .story-section > div p {
   margin-top: 0;
 }
 
-/* Optional: style for the context layer box */
 .context-layer {
   background: #f2f2f2;
   padding: 12px;
   border-radius: 6px;
   margin-top: 10px;
 }
-
 
 .story-section button {
   padding: 0.5rem 1rem;
@@ -65,15 +59,13 @@ h1, h2 {
   cursor: pointer;
 }
 
-/* Text block next to the image */
 .content-wrapper p {
-  flex: 1;                   /* use remaining width */
-  max-width: 36rem;          /* limit line length */
+  flex: 1;                   
+  max-width: 36rem;          
   line-height: 1.6;
   margin: 0;
 }
 
-/* Legend styling */
 .legend {
   background: white;
   padding: 10px 14px;
@@ -102,26 +94,22 @@ h1, h2 {
   border: 1px solid #ccc;
 }
 
-
-/* Layout for the text + image container */
 .content-wrapper {
   display: flex;
-  align-items: flex-start;   /* align tops of image and text */
-  gap: 12px;                 /* space between them */
-  margin-bottom: 1rem;       /* space before the button */
+  align-items: flex-start;   
+  gap: 2rem;                 
+  margin-bottom: 1rem;       
 }
 
-/* Image + caption block */
 .country-figure {
-  flex: 0 0 45%;             /* image side takes ~45% of the row */
+  flex: 0 0 45%;             
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-/* The image itself */
 .country-image {
-  width: 100%;               /* fill the 45% area */
+  width: 100%;               
   height: auto;
   border-radius: 12px;
   object-fit: cover;
