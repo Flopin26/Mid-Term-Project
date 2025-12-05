@@ -124,4 +124,45 @@ h1, h2 {
   font-style: italic;
 }
 
+/* =========================
+   TOP MENU STYLING
+   ========================= */
+
+.top-menu {
+  width: 100%;
+  background-color: white;
+  border-bottom: 1px solid #ddd;
+  position: sticky;     /* Menü bleibt oben kleben */
+  top: 0;
+  z-index: 1000;
+  padding: 0.5rem 0;
+}
+
+.top-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;   /* zentriert */
+  gap: 2rem;                 /* Abstand zwischen Links */
+}
+
+.top-menu li {
+  display: inline;
+}
+
+.top-menu a {
+  text-decoration: none;
+  font-size: 1rem;
+  color: #2b7bbc;
+  font-weight: 600;
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.top-menu a:hover {
+  background-color: #2b7bbc;
+  color: white;
+}
 
