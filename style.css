@@ -40,9 +40,20 @@ h1, h2 {
   color: #333;
 }
 
-.story-section {
-  margin-bottom: 2rem;
+
+/* Make sure paragraph inside flex container has no weird margins */
+.story-section > div p {
+  margin-top: 0;
 }
+
+/* Optional: style for the context layer box */
+.context-layer {
+  background: #f2f2f2;
+  padding: 12px;
+  border-radius: 6px;
+  margin-top: 10px;
+}
+
 
 .story-section button {
   padding: 0.5rem 1rem;
@@ -54,8 +65,12 @@ h1, h2 {
   cursor: pointer;
 }
 
-.story-section button:hover {
-  background-color: #1e5b89;
+/* Text block next to the image */
+.content-wrapper p {
+  flex: 1;                   /* use remaining width */
+  max-width: 36rem;          /* limit line length */
+  line-height: 1.6;
+  margin: 0;
 }
 
 /* Legend styling */
@@ -87,16 +102,38 @@ h1, h2 {
   border: 1px solid #ccc;
 }
 
+
+/* Layout for the text + image container */
 .content-wrapper {
   display: flex;
-  align-items: flex-start;   /* Align text and image nicely */
-  gap: 20px;                 /* Space between text and image */
+  align-items: flex-start;   /* align tops of image and text */
+  gap: 12px;                 /* space between them */
+  margin-bottom: 1rem;       /* space before the button */
 }
 
+/* Image + caption block */
+.country-figure {
+  flex: 0 0 45%;             /* image side takes ~45% of the row */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* The image itself */
 .country-image {
-  width: 200px;              /* Adjust size as needed */
+  width: 100%;               /* fill the 45% area */
   height: auto;
-  border-radius: 8px;        /* Optional, makes it nicer */
+  border-radius: 12px;
+  object-fit: cover;
+  margin-top: 0;
+}
+
+.country-figure figcaption {
+  margin-top: 8px;
+  font-size: 0.9rem;
+  color: #555;
+  text-align: center;
+  font-style: italic;
 }
 
 
