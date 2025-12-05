@@ -16,17 +16,15 @@ header, footer {
   align-items: center;
 }
 
-/* Smaller, cleaner map */
 #map {
   width: 90%;
-  height: 50vh;   /* reduced height */
+  height: 50vh;  
   margin: 1.5rem 0;
   border-radius: 12px;
   box-shadow: 0 2px 10px rgba(0,0,0,0.15);
   overflow: hidden;
 }
 
-/* Narrative layout */
 #narrative {
   width: 90%;
   max-width: 900px;
@@ -40,8 +38,15 @@ h1, h2 {
   color: #333;
 }
 
-.story-section {
-  margin-bottom: 2rem;
+.story-section > div p {
+  margin-top: 0;
+}
+
+.context-layer {
+  background: #f2f2f2;
+  padding: 12px;
+  border-radius: 6px;
+  margin-top: 10px;
 }
 
 .story-section button {
@@ -54,11 +59,13 @@ h1, h2 {
   cursor: pointer;
 }
 
-.story-section button:hover {
-  background-color: #1e5b89;
+.content-wrapper p {
+  flex: 1;                   
+  max-width: 36rem;          
+  line-height: 1.6;
+  margin: 0;
 }
 
-/* Legend styling */
 .legend {
   background: white;
   padding: 10px 14px;
@@ -87,52 +94,34 @@ h1, h2 {
   border: 1px solid #ccc;
 }
 
-/* =============================
-   TOP NAVIGATION MENU
-   ============================= */
-.top-menu {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  background: #1d91c0;
-  padding: 10px 0;
-  z-index: 1000;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-}
-
-.top-menu ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
+.content-wrapper {
   display: flex;
-  justify-content: center;
-  gap: 25px;
+  align-items: flex-start;   
+  gap: 2rem;                 
+  margin-bottom: 1rem;       
 }
 
-.top-menu li {
-  display: inline;
+.country-figure {
+  flex: 0 0 45%;             
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.top-menu a {
-  color: white;
-  font-weight: 600;
-  text-decoration: none;
-  padding: 8px 12px;
-  border-radius: 5px;
-  transition: background 0.3s;
+.country-image {
+  width: 100%;               
+  height: auto;
+  border-radius: 12px;
+  object-fit: cover;
+  margin-top: 0;
 }
 
-.top-menu a:hover {
-  background: rgba(255, 255, 255, 0.25);
+.country-figure figcaption {
+  margin-top: 8px;
+  font-size: 0.9rem;
+  color: #555;
+  text-align: center;
+  font-style: italic;
 }
 
-/* Push content down so menu doesn't overlap */
-header {
-  margin-top: 70px;
-}
 
-/* Smooth scrolling effect */
-html {
-  scroll-behavior: smooth;
-  scroll-padding-top: 90px; /* adjust based on menu height */
-}
