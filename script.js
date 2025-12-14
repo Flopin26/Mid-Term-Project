@@ -1,32 +1,30 @@
-// =========================
-// Initialize the map
-// =========================
-var map = L.map('map').setView([20, 10], 2);
+//INITIALIZE MAP
 
-// Base layer
+const map = L.map('map').setView([20, 10], 2);
+
+// Base Layer (OpenStreetMap)
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   maxZoom: 6,
   attribution: '© OpenStreetMap contributors'
 }).addTo(map);
 
 
-// =========================
-// Choropleth (World Map)
-// =========================
-var geojsonUrl = 'data/Final-Woldmap.geojson';
+// CHOROPLETH: GLOBAL INTERNET USERS
 
-// Color scale for internet use
-function getColor(d) {
-  return d > 90 ? '#0c2c84' :
-         d > 75 ? '#225ea8' :
-         d > 60 ? '#1d91c0' :
-         d > 45 ? '#41b6c4' :
-         d > 30 ? '#7fcdbb' :
-         d > 15 ? '#c7e9b4' :
-                  '#f2e6b8';
+const geojsonUrl = 'data/Final-Woldmap.geojson';
+
+// Color scale for all maps (Internet, 5G, 3G)
+function getColor(value) {
+  return value > 90 ? '#0c2c84' :
+         value > 75 ? '#225ea8' :
+         value > 60 ? '#1d91c0' :
+         value > 45 ? '#41b6c4' :
+         value > 30 ? '#7fcdbb' :
+         value > 15 ? '#c7e9b4' :
+                      '#f2e6b8';
 }
 
-function styleFeature(feature) {
+function styleInternet(feature) {
   const v = Number(feature.properties.daten_neu_2023);
   return {
     fillColor: getColor(v),
@@ -40,27 +38,27 @@ function styleFeature(feature) {
 let choroplethLayer;
 
 
-// =========================
-// Focus Countries Layer
-// =========================
-var focusCountries = {
-  "type": "FeatureCollection",
-  "features": [
+
+// FOCUS COUNTRY LAYER (Netherlands + Chad)
+
+const focusCountries = {
+  type: "FeatureCollection",
+  features: [
     {
-      "type": "Feature",
-      "properties": { "name": "Netherlands", "role": "High access" },
-      "geometry": { "type": "Point", "coordinates": [5.3, 52.1] }
+      type: "Feature",
+      properties: { name: "Netherlands", role: "High access" },
+      geometry: { type: "Point", coordinates: [5.3, 52.1] }
     },
     {
-      "type": "Feature",
-      "properties": { "name": "Chad", "role": "Low access" },
-      "geometry": { "type": "Point", "coordinates": [18.7, 15.5] }
+      type: "Feature",
+      properties: { name: "Chad", role: "Low access" },
+      geometry: { type: "Point", coordinates: [18.7, 15.5] }
     }
   ]
 };
 
-var focusLayer = L.geoJSON(focusCountries, {
-  pointToLayer: function (feature, latlng) {
+const focusLayer = L.geoJSON(focusCountries, {
+  pointToLayer: (feature, latlng) => {
     return L.circleMarker(latlng, {
       radius: 10,
       fillColor: feature.properties.role === 'High access' ? '#006d2c' : '#a50f15',
@@ -70,22 +68,22 @@ var focusLayer = L.geoJSON(focusCountries, {
       fillOpacity: 0.9
     });
   },
-  onEachFeature: function (feature, layer) {
-    layer.bindPopup('<strong>' + feature.properties.name + '</strong><br>' + feature.properties.role);
+  onEachFeature: (feature, layer) => {
+    layer.bindPopup(`<strong>${feature.properties.name}</strong><br>${feature.properties.role}`);
     layer.bindTooltip(feature.properties.name, {
       permanent: true,
       direction: 'top',
       className: 'country-label'
-    }).openTooltip();
+    });
   }
 }).addTo(map);
 
 
-// =========================
-// Hover highlight for choropleth
-// =========================
+
+// HOVER INTERACTIONS
+
 function highlightFeature(e) {
-  var layer = e.target;
+  const layer = e.target;
   layer.setStyle({
     weight: 2,
     color: '#000',
@@ -98,7 +96,7 @@ function resetHighlight(e) {
   choroplethLayer.resetStyle(e.target);
 }
 
-function onEachChoroplethFeature(feature, layer) {
+function onEachCountry(feature, layer) {
   layer.on({
     mouseover: highlightFeature,
     mouseout: resetHighlight
@@ -111,22 +109,18 @@ function onEachChoroplethFeature(feature, layer) {
 }
 
 
-// =========================
-// Layer Control (saved in variable!)
-// =========================
-var layerControl;
+// LAYER CONTROL
 
+let layerControl;
 
-// Load global GeoJSON + add layer control after load
 fetch(geojsonUrl)
   .then(res => res.json())
   .then(data => {
     choroplethLayer = L.geoJSON(data, {
-      style: styleFeature,
-      onEachFeature: onEachChoroplethFeature
+      style: styleInternet,
+      onEachFeature: onEachCountry
     }).addTo(map);
 
-    // Create layer control NOW and save in variable
     layerControl = L.control.layers(
       null,
       {
@@ -138,9 +132,8 @@ fetch(geojsonUrl)
   });
 
 
-// =========================
-// Zoom Buttons
-// =========================
+// ZOOM FUNCTIONS
+
 function zoomGlobal() {
   map.setView([20, 10], 2);
 }
@@ -154,80 +147,69 @@ function zoomLow() {
 }
 
 
-// =========================
-// Legend
-// =========================
-var legend = L.control({position: 'bottomright'});
+// LEGEND
 
-legend.onAdd = function (map) {
-  var div = L.DomUtil.create('div', 'info legend');
-  var grades = [0, 15, 30, 45, 60, 75, 90];
+const legend = L.control({ position: 'bottomright' });
 
-  for (var i = 0; i < grades.length; i++) {
+legend.onAdd = function () {
+  const div = L.DomUtil.create('div', 'info legend');
+  const grades = [0, 15, 30, 45, 60, 75, 90, 100];
+
+  for (let i = 0; i < grades.length - 1; i++) {
     div.innerHTML +=
-      '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
-      grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+      `<i style="background:${getColor(grades[i] + 1)}"></i>
+       ${grades[i]}–${grades[i + 1]}%<br>`;
   }
 
   return div;
 };
+
 legend.addTo(map);
 
 
-// =========================
-// 5G MAP LAYER (using 5g_Column24)
-// =========================
+// 5G COVERAGE LAYER
 
-var map5gUrl = 'data/5g_map.geojson';
+const map5gUrl = 'data/5g_map.geojson';
 
-// Extract 5G percentage
 function get5GValue(feature) {
   return Number(feature.properties["5g_Column24"]);
 }
 
 function style5G(feature) {
-  const v = get5GValue(feature);
   return {
-    fillColor: getColor(v),  // same color scale
+    fillColor: getColor(get5GValue(feature)),
     weight: 1,
     opacity: 1,
-    color: '#fff',           // SAME white borders as internet map
-    fillOpacity: 0.7        // SAME transparency
+    color: '#fff',
+    fillOpacity: 0.7
   };
 }
 
-
-var layer5G;
+let layer5G;
 
 fetch(map5gUrl)
   .then(res => res.json())
   .then(data => {
     layer5G = L.geoJSON(data, {
       style: style5G,
-      onEachFeature: function(feature, layer) {
-        const v = get5GValue(feature);
-
-        // Define a layer-specific reset function
+      onEachFeature: (feature, layer) => {
         function resetHighlight5G(e) {
-            layer5G.resetStyle(e.target);
+          layer5G.resetStyle(e.target);
         }
-
         layer.on({
           mouseover: highlightFeature,
-          // Use the layer-specific reset function
           mouseout: resetHighlight5G
         });
 
         layer.bindPopup(`
           <strong>${feature.properties.NAME}</strong><br>
-          5G coverage: ${v}%
+          5G coverage: ${get5GValue(feature)}%
         `);
       }
     });
 
-
-    // Add 5G layer to layerControl once it's available
-    let interval = setInterval(() => {
+    // Add layer after layerControl exists
+    const interval = setInterval(() => {
       if (layerControl) {
         layerControl.addOverlay(layer5G, "5G coverage (choropleth)");
         clearInterval(interval);
@@ -236,96 +218,50 @@ fetch(map5gUrl)
   });
 
 
-  // =========================
-// Toggle buttons
-// =========================
 
-function showInternet() {
-  if (layer5G && map.hasLayer(layer5G)) {
-    map.removeLayer(layer5G);
-  }
-  if (!map.hasLayer(choroplethLayer)) {
-    map.addLayer(choroplethLayer);
-  }
-}
+// 3G COVERAGE LAYER
 
-function show5G() {
-  if (choroplethLayer && map.hasLayer(choroplethLayer)) {
-    map.removeLayer(choroplethLayer);
-  }
-  if (!map.hasLayer(layer5G)) {
-    map.addLayer(layer5G);
-  }
-}
+const map3gUrl = 'data/3g_final_map.geojson';
 
-function show3G() {
-  if (choroplethLayer && map.hasLayer(choroplethLayer)) {
-    map.removeLayer(choroplethLayer);
-  }
-  if (layer5G && map.hasLayer(layer5G)) {
-    map.removeLayer(layer5G);
-  }
-  if (!map.hasLayer(layer3G)) {
-    map.addLayer(layer3G);
-  }
-}
-// =========================
-// 3G MAP LAYER (using Column35)
-// =========================
-
-var map3gUrl = 'data/3g_final_map.geojson';
-
-// Extract 3G percentage
 function get3GValue(feature) {
   return Number(feature.properties["3g_final_Column35"]);
 }
 
 function style3G(feature) {
-  const v = get3GValue(feature);
   return {
-    fillColor: getColor(v),  // EXACT same color scale as Internet + 5G
+    fillColor: getColor(get3GValue(feature)),
     weight: 1,
     opacity: 1,
-    color: '#fff',           // same borders
+    color: '#fff',
     fillOpacity: 0.7
   };
 }
 
-var layer3G;
-
-// ... [EXISTING 3G MAP LAYER CODE] ...
+let layer3G;
 
 fetch(map3gUrl)
   .then(res => res.json())
   .then(data => {
     layer3G = L.geoJSON(data, {
       style: style3G,
-      onEachFeature: function(feature, layer) {
-        const v = get3GValue(feature);
-        
-        // Define a layer-specific reset function
+      onEachFeature: (feature, layer) => {
         function resetHighlight3G(e) {
-            layer3G.resetStyle(e.target);
+          layer3G.resetStyle(e.target);
         }
 
         layer.on({
           mouseover: highlightFeature,
-          // Use the layer-specific reset function
           mouseout: resetHighlight3G
         });
 
         layer.bindPopup(`
           <strong>${feature.properties.NAME}</strong><br>
-          3G coverage: ${v}%
+          3G coverage: ${get3GValue(feature)}%
         `);
       }
     });
 
-// ... [REST OF 3G CODE] ...
-
-
-    // Add 3G layer to the layerControl once ready
-    let interval = setInterval(() => {
+    const interval = setInterval(() => {
       if (layerControl) {
         layerControl.addOverlay(layer3G, "3G coverage (choropleth)");
         clearInterval(interval);
@@ -333,10 +269,34 @@ fetch(map3gUrl)
     }, 100);
   });
 
- function downloadFile(url) {
+
+// TOGGLE MAP LAYERS
+
+function showInternet() {
+  map.removeLayer(layer5G);
+  map.removeLayer(layer3G);
+  map.addLayer(choroplethLayer);
+}
+
+function show5G() {
+  map.removeLayer(choroplethLayer);
+  map.removeLayer(layer3G);
+  map.addLayer(layer5G);
+}
+
+function show3G() {
+  map.removeLayer(choroplethLayer);
+  map.removeLayer(layer5G);
+  map.addLayer(layer3G);
+}
+
+
+// DATA DOWNLOAD UTILITY
+
+function downloadFile(url) {
   const link = document.createElement('a');
   link.href = url;
-  link.download = url.split('/').pop();  // filename only
+  link.download = url.split('/').pop();
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
